@@ -1,0 +1,1 @@
+Sorting is the process of placing elements from a collection in some kind of order. 

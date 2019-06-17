@@ -1,6 +1,6 @@
 """
 In divide and conquer approach, the problem in hand, is divided into smaller sub-problems and then each problem is
-solved independently. When we keep on dividing the subproblems into even smaller sub-problems, we may eventually reach
+solved independently. When we keep on dividing the sub problems into even smaller sub-problems, we may eventually reach
 a stage where no more division is possible. Those "atomic" smallest possible sub-problem (fractions) are solved. The solution of all sub-problems is finally merged in order to obtain the solution of an original problem.
 """
 

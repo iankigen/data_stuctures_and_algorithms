@@ -3,6 +3,8 @@ Breadth-first search is an algorithm for traversing or searching tree or graph d
 It starts at the tree root, and explores all of the neighbor nodes at the present depth prior to moving on to the nodes
 at the next depth
 
+Depth-first search is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at
+the root node and explores as far as possible along each branch before backtracking.
 """
 
 
@@ -14,14 +16,18 @@ class Vertex(object):
 		self.distance = 9999
 		self.status = 'unvisited'
 
+		self.discovery = 0
+		self.finish = 0
+
 	def add_neighbour(self, vertex):
-		if vertex not in self.neighbours:
+		if vertex not in set(self.neighbours):
 			self.neighbours.append(vertex)
 			self.neighbours.sort()
 
 
 class Graph(object):
 	vertices = {}
+	time = 0
 
 	def add_vertex(self, vertex):
 		if isinstance(vertex, Vertex) and vertex.name not in self.vertices:
@@ -44,8 +50,7 @@ class Graph(object):
 			print('Vertex :', key)
 			print('Neighbours :', self.vertices[key].neighbours)
 			print('Distance :', self.vertices[key].distance)
-			print('Status :', self.vertices[key].status)
-			print('----'*10)
+			print('-' * 40)
 
 	def bfs(self, vertex):
 		q = list()
@@ -67,6 +72,23 @@ class Graph(object):
 					if node_v.distance > node_u.distance + 1:
 						node_v.distance = node_u.distance + 1
 
+	def _dfs(self, vertex):
+		global time
+		vertex.status = 'visited'
+		vertex.discovery = time
+		time += 1
+		for v in vertex.neighbours:
+			if self.vertices[v].status == 'unvisited':
+				self._dfs(self.vertices[v])
+		vertex.status = 'dfs_visited'
+		vertex.finish = time
+		time += 1
+
+	def dfs(self, vertex):
+		global time
+		time = 1
+		self._dfs(vertex)
+
 
 g = Graph()
 a = Vertex('A')
@@ -78,5 +100,9 @@ edges = ['AB', 'AE', 'BF', 'CG', 'DE', 'DE', 'DH', 'EH', 'FG', 'FI', 'FJ', 'GJ',
 for edge in edges:
 	g.add_edge(edge[:1], edge[1:])
 
+print('BFS')
 g.bfs(a)
+g.print_graph()
+print('DFS')
+g.dfs(a)
 g.print_graph()
